@@ -27,14 +27,10 @@ import {
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 
 export default function App() {
-  // 1. Charger/Sauvegarder les données, l'objectif et le thème dans LocalStorage
+  // 1. Charger les données depuis le LocalStorage (vide par défaut si rien n'est sauvegardé)
   const [transactions, setTransactions] = useState(() => {
     const saved = localStorage.getItem('mon_portefeuille_tx');
-    return saved ? JSON.parse(saved) : [
-      { id: 1, title: 'Salaire', amount: 2500, type: 'income', category: 'Revenu', date: '2026-10-01' },
-      { id: 2, title: 'Loyer', amount: 800, type: 'expense', category: 'Logement', date: '2026-10-05' },
-      { id: 3, title: 'Courses', amount: 150, type: 'expense', category: 'Alimentation', date: '2026-10-10' }
-    ];
+    return saved ? JSON.parse(saved) : []; // ⬅️ Modifié ici : tableau vide par défaut
   });
 
   const [monthlyBudgetLimit, setMonthlyBudgetLimit] = useState(() => {
@@ -73,7 +69,7 @@ export default function App() {
   const [messages, setMessages] = useState([
     {
       sender: 'oumii',
-      text: "Bonjour ! Je suis Oumii 🤖, votre assistant budget. Posez-moi des questions sur vos finances ou cliquez sur une suggestion ci-dessous !"
+      text: "Bonjour ! Je suis Oumii 🤖, votre assistant budget. Ajoutez vos premières opérations pour que je puisse vous aider à analyser vos finances !"
     }
   ]);
   const [inputMessage, setInputMessage] = useState('');
@@ -276,7 +272,7 @@ export default function App() {
             <img 
               src="/logo.png" 
               alt="Logo Mon Portefeuille" 
-              className="h-40 w-auto object-contain"
+              className="h-12 w-auto object-contain"
             />
           </div>
 
@@ -290,7 +286,6 @@ export default function App() {
           </div>
 
           <div className="flex items-center justify-end gap-2">
-            {/* Bouton Dark / Light Mode */}
             <button 
               onClick={() => setIsDarkMode(!isDarkMode)}
               className={`p-2.5 border rounded-xl shadow-sm transition flex items-center justify-center ${isDarkMode ? 'bg-slate-800 border-slate-700 text-amber-400 hover:bg-slate-700' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}
@@ -581,15 +576,8 @@ export default function App() {
             <div className="space-y-3 flex-1 overflow-y-auto max-h-[520px] pr-2">
               {filteredTransactions.length === 0 ? (
                 <div className={`text-center py-12 rounded-2xl border border-dashed ${isDarkMode ? 'bg-slate-900/50 border-slate-700' : 'bg-slate-50/50 border-slate-200'}`}>
-                  <p className="text-slate-400 text-sm mb-2">Aucune opération ne correspond à votre recherche.</p>
-                  {(searchTerm || selectedTypeFilter !== 'all' || selectedCategoryFilter !== 'all') && (
-                    <button 
-                      onClick={resetFilters}
-                      className="inline-flex items-center gap-1.5 text-xs text-[#059669] font-medium hover:underline mt-1"
-                    >
-                      <RotateCcw className="w-3.5 h-3.5" /> Réinitialiser les filtres
-                    </button>
-                  )}
+                  <p className="text-slate-400 text-sm mb-2">Aucune transaction pour le moment.</p>
+                  <p className="text-xs text-slate-500">Utilisez le formulaire à gauche pour ajouter vos revenus et dépenses.</p>
                 </div>
               ) : (
                 filteredTransactions.map((tx) => (
