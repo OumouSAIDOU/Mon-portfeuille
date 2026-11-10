@@ -268,13 +268,13 @@ export default function App() {
         {/* Header avec Logo à gauche, Titre centré et Actions à droite */}
         <header className={`grid grid-cols-3 items-center pb-6 mb-8 border-b transition-colors ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
           
-         <div className="flex items-center justify-start">
-  <img
-    src="/logo.png"
-    alt="Logo Mon Portefeuille"
-    className="h-20 md:h-28 w-auto max-w-full object-contain"
-  />
-</div>
+          <div className="flex items-center justify-start">
+            <img 
+              src="/logo.png" 
+              alt="Logo Mon Portefeuille" 
+              className="h-12 w-auto object-contain"
+            />
+          </div>
 
           <div className="text-center">
             <h1 className={`text-2xl md:text-3xl font-extrabold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
